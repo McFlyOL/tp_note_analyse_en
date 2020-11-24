@@ -69,3 +69,48 @@ def switch_demo(argument):
         "text8": "Lettre à Monsieur Frédéric Masson"
     }
     return switcher.get(argument, "Mauvais titre donné")
+
+def differences_en(tableau,tableau_plus_grand):
+            i=0
+            n=0
+            tableau_diff_annotations="<div style='text-align:center'><br>-----------------------------------------------------------------------------------------------------"
+            tableau_diff_annotations+="<h2>Différence d'annotations entre NLTK et SPACY (sur les entitées nommées communes)</h2>"
+            while i != len(tableau_plus_grand):
+                #print(tableau_plus_grand)
+                #print("-------------------------------------")
+                #print("Taille tableau plus grand")
+                #print(len(tableau_plus_grand))
+                #print("Taille tableau plus petit")
+                #print(len(tableau))
+                #print("i : ")
+                #print(i)
+                #print("n : ")
+                #print(n)
+                #print("Spacy LG : "+ tableau_plus_grand[i][0])
+                #print("NLTK : "+tableau[n][0])
+                #print("Annotation Spacy : "+ tableau_plus_grand[i][1])
+                #print("Annotation NLTK : "+tableau[n][1])
+                if(tableau_plus_grand[i][0] in tableau[n][0]):
+                    #print("---------------Dedans-----------------")
+                    if(tableau_plus_grand[i][1]!=tableau[0][1]):
+                        #print(tableau[0][1])
+                        if((tableau_plus_grand[i][1]=="PER" and tableau[n][1]!="PERSON")
+                        or (tableau_plus_grand[i][1]=="ORG" and tableau[n][1]!="ORGANIZATION")
+                        or (tableau_plus_grand[i][1]=="FAC" and tableau[n][1]!="FACILITY")
+                        or (tableau_plus_grand[i][1]=="LOC" and tableau[n][1]!="LOCATION")):
+                            tableau_diff_annotations+="<b>"+tableau[n][0]+"</b>"+" : <br>"
+                            tableau_diff_annotations+="&nbsp;&nbsp;&nbsp;&nbsp;-NLTK : "+tableau[n][1]+"<br>"
+                            tableau_diff_annotations+="&nbsp;&nbsp;&nbsp;&nbsp;-SPACY : "+tableau_plus_grand[i][1]+"<br>"
+                    if(i<len(tableau_plus_grand)):
+                        i=i+1
+                    else:
+                        break
+                if(n==(len(tableau)-1)):
+                    n=0
+                    if(i<len(tableau_plus_grand)):
+                        i=i+1
+                    else:
+                        break
+                else:
+                    n=n+1
+            return tableau_diff_annotations
